@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="Eddie Antonio Santos" />
+  <title>infix: An Introduction</title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<div id="header">
+<h1 class="title">infix: An Introduction</h1>
+<h2 class="author">Eddie Antonio Santos</h2>
+<h3 class="date">September 7, 2014</h3>
+</div>
+<h1 id="infix"><span class="logo">In<span class="fix">fix</span></span></h1>
+<p>Smalltalk but 20% cooler.</p>
+<h2 id="introduction">Introduction</h2>
+<p>Taking inspiration from:</p>
+<ul>
+<li>Smalltalk – Message passing semantics</li>
+<li>Haskell – Type system and pattern matching</li>
+<li>Erlang – Actor-based concurrency</li>
+<li>Wyvern – <a href="http://www.cs.cmu.edu/~aldrich/papers/ecoop14-tsls.pdf">Type specific languages</a></li>
+<li>Scala – Anti-inspiration: bloated semantics</li>
+<li>Python – <a href="http://en.wikipedia.org/wiki/Docstring"><code>docstrings</code></a> and <a href="https://docs.python.org/3.4/library/doctest.html"><code>doctest</code></a></li>
+</ul>
+<p>Experiments in language design, trying to trim the fat of a bunch of <strong>cool things</strong> down to a small, but tremendously useful set of semantics:</p>
+<ul>
+<li>pattern matching</li>
+<li>message passing</li>
+<li>type inference</li>
+<li>actor-model concurrency</li>
+<li>type specific languages</li>
+</ul>
+<p>Note: I am <em>completely</em> aware of the hypocrisy! This is a playground for a bunch of nifty ideas; only the niftiest will survive.</p>
+<h2 id="observation">Observation:</h2>
+<p>The amount of semantics in a language (<span class="math"><em>S</em><em>e</em><em>m</em>(<em>L</em>)</span>) is minimally bound by the amount of syntax in a language (<span class="math"><em>S</em><em>y</em><em>n</em>(<em>l</em>)</span>):</p>
+<p><br /><span class="math"><em>S</em><em>e</em><em>m</em>(<em>l</em>) = Ω (<em>S</em><em>y</em><em>n</em>(<em>l</em>))</span><br /></p>
+<h1 id="classes-and-objects">Classes and objects</h1>
+<dl>
+<dt><code>Display</code> object</dt>
+<dd><p><code>print String -&gt; void</code></p>
+<p>Prints the string to the standard display.</p>
+</dd>
+<dt><code>Integer</code> class</dt>
+<dd><p><code>to (end: Integer) -&gt; Range</code></p>
+<p>Creates a new <code>Range</code> from the first integer to the second incrementing by 1.</p>
+</dd>
+<dd><p><code>mod (n: Integer) -&gt; Integer</code></p>
+<p>Modulo division. The image of the function is restricted in <span class="math">[0, <em>n</em>)</span>.</p>
+</dd>
+<dd><p><code>= (n: Integer) -&gt; Boolean</code></p>
+<p>Value equality. True iff the integer represents the same value as <code>n</code>.</p>
+</dd>
+<dt><code>Function</code> class</dt>
+<dd><p><code>documentation -&gt; Markdown</code></p>
+<p>Returns documentation assoicated with the function in Markdown format.</p>
+</dd>
+<dt><code>Object</code> class</dt>
+<dd><p><code>to (t: Type) -&gt; Type</code></p>
+<p>Attempts to coerce (oh no!) the object to type <code>t</code>.</p>
+</dd>
+<dt><code>Boolean</code> class</dt>
+<dd><p><code>ifTrue (proc: -&gt; Void) -&gt; Computation</code></p>
+<p>Executes <code>proc</code> only when the Boolean is the <code>True</code> object (inheritance-based).</p>
+</dd>
+<dd><p><code>ifFalse (proc: -&gt; Void) -&gt; Computation</code></p>
+<p>Executes <code>proc</code> only when the Boolean is the <code>False</code> object (inheritance-based).</p>
+</dd>
+<dt><code>Range</code> class</dt>
+<dd><p><code>each (proc: Integer -&gt; Void) -&gt; Void</code></p>
+<p>Executes <code>proc</code> on each integer sequentially.</p>
+</dd>
+<dd><p><code>map (fn: Integer -&gt; A) -&gt; Iterable[A]</code></p>
+<p>Returns an iterable made by running <code>fn</code> on every integer. Makes no gaurentees of execution order.</p>
+</dd>
+</dl>
+<h1 id="info-dump">Info dump!</h1>
+<ul>
+<li>Type system cleverly allows side-effects (basically, marks functions with effects and forbids optimizations with dem guys).</li>
+<li>Pattern matching is a pretty cool guy</li>
+<li>Allow for clever compilation techniques rather than base the language on easy/well-known transliteration to target architecture.</li>
+<li>Explicitly a “character stream” or “string based” language. Mark this as a paradigm, because we want to encourage languages that do away with the text editor.</li>
+<li>Extracting the tests from an explicit (strict) Markdown literal will be easy-peasy. We essentially have an AST – this means we can extract all body nodes that look like infix code.</li>
+</ul>
+<h1 id="credits">Credits</h1>
+<p>A silly distraction by <a href="https://github.com/eddieantonio">eddieantonio</a>. This document and all of its ideas are Copyright © 2014 Eddie Antonio Santos.</p>
+<style>
+
+h1.title, h2.author, h3.date { display: none; }
+
+.logo { text-transform: lowercase; }
+.fix { font-style: italic; }
+
+body {
+    max-width: 32em;
+    margin: auto;
+    font-family: sans-serif;
+}
+
+body > h1:first-of-type {
+    text-align: center;
+    font-family: serif;
+}
+
+</style>
+
+</body>
+</html>

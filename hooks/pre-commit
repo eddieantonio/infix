@@ -1,0 +1,5 @@
+#!/bin/sh
+
+FILES=index.html
+
+make && git add $FILES
