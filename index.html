@@ -41,53 +41,61 @@
 <p>I’m only half kidding about this.</p>
 <h1 id="examples">Examples</h1>
 <h2 id="hello-world">Hello, World</h2>
-<pre><code>Display print &quot;Hello, World!&quot;</code></pre>
+<pre><code><span class="obj">Display</span> <span class="msg">print</span> <span
+   class="str">"Hello, World!"</span></code></pre>
+
 <h2 id="fizzbuzz">Fizzbuzz</h2>
-<pre><code>(1 to 100) each
-    num when (num mod 15) = 0
-        Display print &quot;fizzbuzz&quot;
-    num when (num mod 3) = 0
-        Display print &quot;fizz&quot;
-    num when (num mod 5) = 0
-        Display print &quot;buzz&quot;
-    num
-        Display print num toString</code></pre>
+<pre><code><span class="lbr">(</span><span class="num">1</span> <span class="msg">to</span> <span class="num">100</span><span class="rbr">)</span> <span class="msg">each</span>
+    <span class="id">num</span> <span class="when">when</span> <span class="lbr">(</span><span class="id">num</span> <span class="msg">mod</span> <span class="num">15</span><span class="rbr">)</span> <span class="msg">=</span> <span class="num">0</span>
+        <span class="obj">Display</span> <span class="msg">print</span> <span class="str">"fizzbuzz"</span>
+    <span class="id">num</span> <span class="when">when</span> <span class="lbr">(</span><span class="id">num</span> <span class="msg">mod</span> <span class="num">3</span><span class="rbr">)</span> <span class="msg">=</span> <span class="num">0</span>
+        <span class="obj">Display</span> <span class="msg">print</span> <span class="str">"fizz"</span>
+    <span class="id">num</span> <span class="when">when</span> <span class="lbr">(</span><span class="id">num</span> <span class="msg">mod</span> <span class="num">5</span><span class="rbr">)</span> <span class="msg">=</span> <span class="num">0</span>
+        <span class="obj">Display</span> <span class="msg">print</span> <span class="str">"buzz"</span>
+    <span class="id">num</span>
+        <span class="obj">Display</span> <span class="msg">print</span> <span class="id">num</span> <span class="msg">toString</span></code></pre>
+
 <h2 id="type-specific-languages">Type Specific Languages</h2>
-<pre><code># Comments are given by prefixing a line with &#39;#&#39;
-url : URL = &lt;https://github.com/eddieantonio/&gt;
+<pre><code><span class="c"># Comments are given by prefixing a line with '#'</span>
+<span class="id">url</span> <span>:</span> <span class="obj">URL</span> <span class="asn">:=</span> <span class="tsl">&lt;https://github.com/eddieantonio/&gt;</span>
 
-url path
-#=&gt; &lt;/eddieantonio&gt; : URLPath
-(url path) toString
-#=&gt; &quot;/eddieantonio&quot; : String
+<span class="id">url</span> <span class="msg">path</span>
+<span class="c">#=> &lt;/eddieantonio&gt; : URLPath</span>
+<span class="lbr">(</span><span class="id">url</span> <span class="msg">path</span><span class="rbr">)</span> <span class="msg">toString</span>
+<span class="c">#=> "/eddieantonio" : String</span>
 
-url scheme
-#=&gt; &lt;http:&gt; : URLScheme
-(url scheme) toString
-#=&gt; &quot;https://&quot;
+<span class="id">url</span> <span class="msg">scheme</span>
+<span class="c">#=> &lt;https:&gt; : URLScheme</span>
+<span class="lbr">(</span><span class="id">url</span> <span class="msg">scheme</span><span class="rbr">)</span> <span class="msg">toString</span>
+<span class="c">#=> "https://" : String</span>
 
-url domain
-#=&gt; &lt;github.com&gt; : Domain
-(url domain) toString
-#=&gt; &quot;gihub.com&quot;
+<span class="id">url</span> <span class="msg">domain</span>
+<span class="c">#=> &lt;github.com&gt; : Domain</span>
+<span class="lbr">(</span><span class="id">url</span> <span class="msg">domain</span><span class="rbr">)</span> <span class="msg">toString</span>
+<span class="c">#=> "github.com" : String</span>
 
-url match
-    &lt;_://%name%/eddieantonio&gt;
-        Display print \
-            &quot;My user name is registered on name%!&quot;
-    # Catch-all pattern. Patterns must be exhaustive.
-    _
-        Display print &quot;Oh, guess I&#39;m not registered &quot;
-                      &quot;on this URL afterall.&quot;
-#=&gt; My user name is registered on github.com!
+<span class="id">url</span> <span class="msg">match</span>
+    <span class="tsl">&lt;<span class="any">_</span><span>://</span><span class="unq">%name%</span><span>/eddieantonio&gt;</span></span>
+        <span class="obj">Display</span> <span class="msg">print</span> <span class="esc">\</span>
+            <span class="str">"My user name is registered on name%!"</span>
+        <span class="c"># Catch-all pattern. Patterns must be exhaustive.</span>
+        <span class="any">_</span>
+            <span class="obj">Display</span> <span class="msg">print</span> <span class="str">"Oh, guess I'm not registered "</span> <span class="esc">\</span>
+                          <span class="str">"on this URL afterall."</span>
+<span class="c">#=> My user name is registered on github.com!</span>
 
-url match
-    &lt;https://%name/_&gt;
-        Display print &quot;Golly! %name% is a secure site!&quot;
-    &lt;http://%name%/_&gt;
-        Display print &quot;Be carefull when dealing &quot;
-                      &quot;with %name%!&quot;
-#=&gt; Golly! github.com is a secure site!</code></pre>
+<span class="id">url</span> <span class="msg">match</span>
+    <span class="tsl">&lt;http://<span class="unq">%name%</span>/<span class="any">_</span><span>&gt;</span></span>
+        <span class="obj">Display</span> <span class="msg">print</span> <span class="str"><span>"Golly! </span><span class="unq">%name%</span><span> is a secure site!"</span></span>
+    <span class="tsl"><span>&lt;http://</span><span class="unq">%name%</span><span>/</span><span class="any">_</span><span>&gt;</span></span>
+        <span class="obj">Display</span> <span class="msg">print</span> <span class="str">"Be carefull when dealing "</span> <span class="esc">\</span>
+                      <span class="str"><span>"with </span><span class="unq">%name%</span><span>!"</span></span>
+<span class="c">#=> Golly! github.com is a secure site!</span>
+
+</code></pre>
+
+
+
 <h1 id="classes-and-objects">Classes and objects</h1>
 <dl>
 <dt><code>Display</code> object</dt>
@@ -151,13 +159,11 @@ body {
     margin: auto;
     font-family: sans-serif;
 }
-
 h1, h2, h3, h4, h5, h6 { font-family: Futura, sans-serif; }
 
-/* Main body stuff. */
-body > h1:first-of-type {
-    text-align: center;
-}
+
+/* Logo stuff. */
+body > h1:first-of-type { text-align: center; }
 .logo {
    font-family: "Computer Modern", Baskerville, serif;
    font-weight: normal;
@@ -179,9 +185,20 @@ code {
     font-family: "Droid Sans Mono", "Consolas", "Anonymous Pro", monospace;
 }
 
+/* Highlighting */
+.obj { font-weight: bold }
+.str, .num, .tsl { color: #d96050; }
+.msg { color: #558; }
+.id { font-style: oblique; }
+.when, .kwd { font-weight: bold; color: #EA0; }
+.c { color: #393; font-style: italic; }
+.unq { color: #00A; }
+.any { color: black; font-weight: bold; }
+
+
 /* Pandoc generated things. */
 h1.title, h2.author, h3.date { display: none; }
-.math { font-family: "Computer Modern", Times, serif; }
+.math { font-family: "Computer Modern", "Times New Roman", Times, serif; }
 
 </style>
 

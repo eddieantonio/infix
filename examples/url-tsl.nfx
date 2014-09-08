@@ -1,0 +1,36 @@
+# Comments are given by prefixing a line with '#'
+url : URL = <https://github.com/eddieantonio/>
+
+url path
+#=> </eddieantonio> : URLPath
+(url path) toString
+#=> "/eddieantonio" : String
+
+url scheme
+#=> <https:> : URLScheme
+(url scheme) toString
+#=> "https://"
+
+url domain
+#=> <github.com> : Domain
+(url domain) toString
+#=> "gihub.com"
+
+url match
+    <_://%name%/eddieantonio>
+        Display print \
+            "My user name is registered on name%!"
+    # Catch-all pattern. Patterns must be exhaustive.
+    _
+        Display print "Oh, guess I'm not registered "
+                      "on this URL afterall."
+#=> My user name is registered on github.com!
+
+url match
+    <https://%name/_>
+        Display print "Golly! %name% is a secure site!"
+    <http://%name%/_>
+        Display print "Be carefull when dealing "
+                      "with %name%!"
+#=> Golly! github.com is a secure site!
+

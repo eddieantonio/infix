@@ -42,57 +42,60 @@ I'm only half kidding about this.
 
 ## Hello, World
 
-    Display print "Hello, World!"
+<pre><code><span class="obj">Display</span> <span class="msg">print</span> <span
+   class="str">"Hello, World!"</span></code></pre>
 
 ## Fizzbuzz
 
-    (1 to 100) each
-        num when (num mod 15) = 0
-            Display print "fizzbuzz"
-        num when (num mod 3) = 0
-            Display print "fizz"
-        num when (num mod 5) = 0
-            Display print "buzz"
-        num
-            Display print num toString
+<pre><code><span class="lbr">(</span><span class="num">1</span> <span class="msg">to</span> <span class="num">100</span><span class="rbr">)</span> <span class="msg">each</span>
+    <span class="id">num</span> <span class="when">when</span> <span class="lbr">(</span><span class="id">num</span> <span class="msg">mod</span> <span class="num">15</span><span class="rbr">)</span> <span class="msg">=</span> <span class="num">0</span>
+        <span class="obj">Display</span> <span class="msg">print</span> <span class="str">"fizzbuzz"</span>
+    <span class="id">num</span> <span class="when">when</span> <span class="lbr">(</span><span class="id">num</span> <span class="msg">mod</span> <span class="num">3</span><span class="rbr">)</span> <span class="msg">=</span> <span class="num">0</span>
+        <span class="obj">Display</span> <span class="msg">print</span> <span class="str">"fizz"</span>
+    <span class="id">num</span> <span class="when">when</span> <span class="lbr">(</span><span class="id">num</span> <span class="msg">mod</span> <span class="num">5</span><span class="rbr">)</span> <span class="msg">=</span> <span class="num">0</span>
+        <span class="obj">Display</span> <span class="msg">print</span> <span class="str">"buzz"</span>
+    <span class="id">num</span>
+        <span class="obj">Display</span> <span class="msg">print</span> <span class="id">num</span> <span class="msg">toString</span></code></pre>
 
 ## Type Specific Languages
 
-    # Comments are given by prefixing a line with '#'
-    url : URL = <https://github.com/eddieantonio/>
+<pre><code><span class="c"># Comments are given by prefixing a line with '#'</span>
+<span class="id">url</span> <span>:</span> <span class="obj">URL</span> <span class="asn">:=</span> <span class="tsl">&lt;https://github.com/eddieantonio/&gt;</span>
 
-    url path
-    #=> </eddieantonio> : URLPath
-    (url path) toString
-    #=> "/eddieantonio" : String
+<span class="id">url</span> <span class="msg">path</span>
+<span class="c">#=> &lt;/eddieantonio&gt; : URLPath</span>
+<span class="lbr">(</span><span class="id">url</span> <span class="msg">path</span><span class="rbr">)</span> <span class="msg">toString</span>
+<span class="c">#=> "/eddieantonio" : String</span>
 
-    url scheme
-    #=> <http:> : URLScheme
-    (url scheme) toString
-    #=> "https://"
+<span class="id">url</span> <span class="msg">scheme</span>
+<span class="c">#=> &lt;https:&gt; : URLScheme</span>
+<span class="lbr">(</span><span class="id">url</span> <span class="msg">scheme</span><span class="rbr">)</span> <span class="msg">toString</span>
+<span class="c">#=> "https://" : String</span>
 
-    url domain
-    #=> <github.com> : Domain
-    (url domain) toString
-    #=> "gihub.com"
+<span class="id">url</span> <span class="msg">domain</span>
+<span class="c">#=> &lt;github.com&gt; : Domain</span>
+<span class="lbr">(</span><span class="id">url</span> <span class="msg">domain</span><span class="rbr">)</span> <span class="msg">toString</span>
+<span class="c">#=> "github.com" : String</span>
 
-    url match
-        <_://%name%/eddieantonio>
-            Display print \
-                "My user name is registered on name%!"
-        # Catch-all pattern. Patterns must be exhaustive.
-        _
-            Display print "Oh, guess I'm not registered "
-                          "on this URL afterall."
-    #=> My user name is registered on github.com!
+<span class="id">url</span> <span class="msg">match</span>
+    <span class="tsl">&lt;<span class="any">_</span><span>://</span><span class="unq">%name%</span><span>/eddieantonio&gt;</span></span>
+        <span class="obj">Display</span> <span class="msg">print</span> <span class="esc">\</span>
+            <span class="str">"My user name is registered on name%!"</span>
+        <span class="c"># Catch-all pattern. Patterns must be exhaustive.</span>
+        <span class="any">_</span>
+            <span class="obj">Display</span> <span class="msg">print</span> <span class="str">"Oh, guess I'm not registered "</span> <span class="esc">\</span>
+                          <span class="str">"on this URL afterall."</span>
+<span class="c">#=> My user name is registered on github.com!</span>
 
-    url match
-        <https://%name/_>
-            Display print "Golly! %name% is a secure site!"
-        <http://%name%/_>
-            Display print "Be carefull when dealing "
-                          "with %name%!"
-    #=> Golly! github.com is a secure site!
+<span class="id">url</span> <span class="msg">match</span>
+    <span class="tsl">&lt;http://<span class="unq">%name%</span>/<span class="any">_</span><span>&gt;</span></span>
+        <span class="obj">Display</span> <span class="msg">print</span> <span class="str"><span>"Golly! </span><span class="unq">%name%</span><span> is a secure site!"</span></span>
+    <span class="tsl"><span>&lt;http://</span><span class="unq">%name%</span><span>/</span><span class="any">_</span><span>&gt;</span></span>
+        <span class="obj">Display</span> <span class="msg">print</span> <span class="str">"Be carefull when dealing "</span> <span class="esc">\</span>
+                      <span class="str"><span>"with </span><span class="unq">%name%</span><span>!"</span></span>
+<span class="c">#=> Golly! github.com is a secure site!</span>
+
+</code></pre>
 
 
 
@@ -203,13 +206,11 @@ body {
     margin: auto;
     font-family: sans-serif;
 }
-
 h1, h2, h3, h4, h5, h6 { font-family: Futura, sans-serif; }
 
-/* Main body stuff. */
-body > h1:first-of-type {
-    text-align: center;
-}
+
+/* Logo stuff. */
+body > h1:first-of-type { text-align: center; }
 .logo {
    font-family: "Computer Modern", Baskerville, serif;
    font-weight: normal;
@@ -231,8 +232,19 @@ code {
     font-family: "Droid Sans Mono", "Consolas", "Anonymous Pro", monospace;
 }
 
+/* Highlighting */
+.obj { font-weight: bold }
+.str, .num, .tsl { color: #d96050; }
+.msg { color: #558; }
+.id { font-style: oblique; }
+.when, .kwd { font-weight: bold; color: #EA0; }
+.c { color: #393; font-style: italic; }
+.unq { color: #00A; }
+.any { color: black; font-weight: bold; }
+
+
 /* Pandoc generated things. */
 h1.title, h2.author, h3.date { display: none; }
-.math { font-family: "Computer Modern", Times, serif; }
+.math { font-family: "Computer Modern", "Times New Roman", Times, serif; }
 
 </style>

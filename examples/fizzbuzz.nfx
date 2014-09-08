@@ -1,0 +1,10 @@
+(1 to 100) each
+    num when (num mod 15) = 0
+        Display print "fizzbuzz"
+    num when (num mod 3) = 0
+        Display print "fizz"
+    num when (num mod 5) = 0
+        Display print "buzz"
+    num
+        Display print num toString
+
