@@ -32,11 +32,71 @@ bunch of nifty ideas; only the niftiest will survive.
 ## Observation:
 
 The amount of semantics in a language ($Sem(L)$) is minimally bound by the
-amount of syntax in a language ($Syn(l)$):
+amount of syntax in a language ($Syn(L)$):
 
-$$Sem(l) = \Omega(Syn(l))$$
+$$Sem(L) = \Omega(Syn(L))$$
 
-# Classes and objects
+I'm only half kidding about this.
+
+# Examples ####################################################################
+
+## Hello, World
+
+    Display print "Hello, World!"
+
+## Fizzbuzz
+
+    (1 to 100) each
+        num when (num mod 15) = 0
+            Display print "fizzbuzz"
+        num when (num mod 3) = 0
+            Display print "fizz"
+        num when (num mod 5) = 0
+            Display print "buzz"
+        num
+            Display print num toString
+
+## Type Specific Languages
+
+    # Comments are given by prefixing a line with '#'
+    url : URL = <https://github.com/eddieantonio/>
+
+    url path
+    #=> </eddieantonio> : URLPath
+    (url path) toString
+    #=> "/eddieantonio" : String
+
+    url scheme
+    #=> <http:> : URLScheme
+    (url scheme) toString
+    #=> "https://"
+
+    url domain
+    #=> <github.com> : Domain
+    (url domain) toString
+    #=> "gihub.com"
+
+    url match
+        <_://%name%/eddieantonio>
+            Display print \
+                "My user name is registered on name%!"
+        # Catch-all pattern. Patterns must be exhaustive.
+        _
+            Display print "Oh, guess I'm not registered "
+                          "on this URL afterall."
+    #=> My user name is registered on github.com!
+
+    url match
+        <https://%name/_>
+            Display print "Golly! %name% is a secure site!"
+        <http://%name%/_>
+            Display print "Be carefull when dealing "
+                          "with %name%!"
+    #=> Golly! github.com is a secure site!
+
+
+
+# Classes and objects ##########################################################
 
 `Display` object
 
@@ -68,7 +128,18 @@ $$Sem(l) = \Omega(Syn(l))$$
 
 :   `to (t: Type) -> Type`
 
-    Attempts to coerce (oh no!) the object to type `t`.
+    ~~Attempts to coerce (oh no!) the object to type `t`.~~ Actually... I don't
+    like this at all. Not one bit at all!
+
+:   `repr -> String`
+
+    Prints the string representation of the object. This should just be a
+    valid object literal that can be used to get the value again, where
+    possible.
+
+:   `match -> Object`
+
+    Do a pattern match on the object.
 
 `Boolean` class
 
@@ -108,26 +179,24 @@ $$Sem(l) = \Omega(Syn(l))$$
  - Extracting the tests from an explicit (strict) Markdown literal will be easy-peasy.
    We essentially have an AST -- this means we can extract all body nodes
    that look like infix code.
+ - Strict Markdown: Precisely defined Markdown dialect. Can potentially be
+   parsed using a [(layout sensitive) context-free grammar][Adams].
 
 
 # Credits
 
-A silly distraction by [eddieantonio](https://github.com/eddieantonio). This
+A silly distraction for [eddieantonio](https://github.com/eddieantonio). This
 document and all of its ideas are Copyright © 2014 Eddie Antonio Santos.
 
 
 
 [tsl]: http://www.cs.cmu.edu/~aldrich/papers/ecoop14-tsls.pdf
-[docstring]: http://en.wikipedia.org/wiki/Docstring 
+[docstring]: http://en.wikipedia.org/wiki/Docstring
 [doctest]: https://docs.python.org/3.4/library/doctest.html
+[Adams]: http://michaeldadams.org/papers/layout_parsing/
 
 
 <style>
-
-h1.title, h2.author, h3.date { display: none; }
-
-.logo { text-transform: lowercase; }
-.fix { font-style: italic; }
 
 body {
     max-width: 32em;
@@ -135,9 +204,35 @@ body {
     font-family: sans-serif;
 }
 
+h1, h2, h3, h4, h5, h6 { font-family: Futura, sans-serif; }
+
+/* Main body stuff. */
 body > h1:first-of-type {
     text-align: center;
-    font-family: serif;
 }
+.logo {
+   font-family: "Computer Modern", Baskerville, serif;
+   font-weight: normal;
+
+   text-transform: lowercase;
+   text-rendering: optimizeLegibility;
+}
+.fix { font-style: italic; }
+
+
+/* Code listings. */
+pre {
+    padding: 5px 10px;
+    border-radius: 0 0 5px 5px;
+    background-color: rgba(0,0,0,0.02);
+    box-shadow: 0 2px 2px rgba(0,0,0,0.1);
+}
+code {
+    font-family: "Droid Sans Mono", "Consolas", "Anonymous Pro", monospace;
+}
+
+/* Pandoc generated things. */
+h1.title, h2.author, h3.date { display: none; }
+.math { font-family: "Computer Modern", Times, serif; }
 
 </style>

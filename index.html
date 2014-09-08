@@ -36,8 +36,58 @@
 </ul>
 <p>Note: I am <em>completely</em> aware of the hypocrisy! This is a playground for a bunch of nifty ideas; only the niftiest will survive.</p>
 <h2 id="observation">Observation:</h2>
-<p>The amount of semantics in a language (<span class="math"><em>S</em><em>e</em><em>m</em>(<em>L</em>)</span>) is minimally bound by the amount of syntax in a language (<span class="math"><em>S</em><em>y</em><em>n</em>(<em>l</em>)</span>):</p>
-<p><br /><span class="math"><em>S</em><em>e</em><em>m</em>(<em>l</em>) = Ω (<em>S</em><em>y</em><em>n</em>(<em>l</em>))</span><br /></p>
+<p>The amount of semantics in a language (<span class="math"><em>S</em><em>e</em><em>m</em>(<em>L</em>)</span>) is minimally bound by the amount of syntax in a language (<span class="math"><em>S</em><em>y</em><em>n</em>(<em>L</em>)</span>):</p>
+<p><br /><span class="math"><em>S</em><em>e</em><em>m</em>(<em>L</em>) = Ω (<em>S</em><em>y</em><em>n</em>(<em>L</em>))</span><br /></p>
+<p>I’m only half kidding about this.</p>
+<h1 id="examples">Examples</h1>
+<h2 id="hello-world">Hello, World</h2>
+<pre><code>Display print &quot;Hello, World!&quot;</code></pre>
+<h2 id="fizzbuzz">Fizzbuzz</h2>
+<pre><code>(1 to 100) each
+    num when (num mod 15) = 0
+        Display print &quot;fizzbuzz&quot;
+    num when (num mod 3) = 0
+        Display print &quot;fizz&quot;
+    num when (num mod 5) = 0
+        Display print &quot;buzz&quot;
+    num
+        Display print num toString</code></pre>
+<h2 id="type-specific-languages">Type Specific Languages</h2>
+<pre><code># Comments are given by prefixing a line with &#39;#&#39;
+url : URL = &lt;https://github.com/eddieantonio/&gt;
+
+url path
+#=&gt; &lt;/eddieantonio&gt; : URLPath
+(url path) toString
+#=&gt; &quot;/eddieantonio&quot; : String
+
+url scheme
+#=&gt; &lt;http:&gt; : URLScheme
+(url scheme) toString
+#=&gt; &quot;https://&quot;
+
+url domain
+#=&gt; &lt;github.com&gt; : Domain
+(url domain) toString
+#=&gt; &quot;gihub.com&quot;
+
+url match
+    &lt;_://%name%/eddieantonio&gt;
+        Display print \
+            &quot;My user name is registered on name%!&quot;
+    # Catch-all pattern. Patterns must be exhaustive.
+    _
+        Display print &quot;Oh, guess I&#39;m not registered &quot;
+                      &quot;on this URL afterall.&quot;
+#=&gt; My user name is registered on github.com!
+
+url match
+    &lt;https://%name/_&gt;
+        Display print &quot;Golly! %name% is a secure site!&quot;
+    &lt;http://%name%/_&gt;
+        Display print &quot;Be carefull when dealing &quot;
+                      &quot;with %name%!&quot;
+#=&gt; Golly! github.com is a secure site!</code></pre>
 <h1 id="classes-and-objects">Classes and objects</h1>
 <dl>
 <dt><code>Display</code> object</dt>
@@ -60,7 +110,13 @@
 </dd>
 <dt><code>Object</code> class</dt>
 <dd><p><code>to (t: Type) -&gt; Type</code></p>
-<p>Attempts to coerce (oh no!) the object to type <code>t</code>.</p>
+<p><del>Attempts to coerce (oh no!) the object to type <code>t</code>.</del> Actually… I don’t like this at all. Not one bit at all!</p>
+</dd>
+<dd><p><code>repr -&gt; String</code></p>
+<p>Prints the string representation of the object. This should just be a valid object literal that can be used to get the value again, where possible.</p>
+</dd>
+<dd><p><code>match -&gt; Object</code></p>
+<p>Do a pattern match on the object.</p>
 </dd>
 <dt><code>Boolean</code> class</dt>
 <dd><p><code>ifTrue (proc: -&gt; Void) -&gt; Computation</code></p>
@@ -84,15 +140,11 @@
 <li>Allow for clever compilation techniques rather than base the language on easy/well-known transliteration to target architecture.</li>
 <li>Explicitly a “character stream” or “string based” language. Mark this as a paradigm, because we want to encourage languages that do away with the text editor.</li>
 <li>Extracting the tests from an explicit (strict) Markdown literal will be easy-peasy. We essentially have an AST – this means we can extract all body nodes that look like infix code.</li>
+<li>Strict Markdown: Precisely defined Markdown dialect. Can potentially be parsed using a <a href="http://michaeldadams.org/papers/layout_parsing/">(layout sensitive) context-free grammar</a>.</li>
 </ul>
 <h1 id="credits">Credits</h1>
-<p>A silly distraction by <a href="https://github.com/eddieantonio">eddieantonio</a>. This document and all of its ideas are Copyright © 2014 Eddie Antonio Santos.</p>
+<p>A silly distraction for <a href="https://github.com/eddieantonio">eddieantonio</a>. This document and all of its ideas are Copyright © 2014 Eddie Antonio Santos.</p>
 <style>
-
-h1.title, h2.author, h3.date { display: none; }
-
-.logo { text-transform: lowercase; }
-.fix { font-style: italic; }
 
 body {
     max-width: 32em;
@@ -100,10 +152,36 @@ body {
     font-family: sans-serif;
 }
 
+h1, h2, h3, h4, h5, h6 { font-family: Futura, sans-serif; }
+
+/* Main body stuff. */
 body > h1:first-of-type {
     text-align: center;
-    font-family: serif;
 }
+.logo {
+   font-family: "Computer Modern", Baskerville, serif;
+   font-weight: normal;
+
+   text-transform: lowercase;
+   text-rendering: optimizeLegibility;
+}
+.fix { font-style: italic; }
+
+
+/* Code listings. */
+pre {
+    padding: 5px 10px;
+    border-radius: 0 0 5px 5px;
+    background-color: rgba(0,0,0,0.02);
+    box-shadow: 0 2px 2px rgba(0,0,0,0.1);
+}
+code {
+    font-family: "Droid Sans Mono", "Consolas", "Anonymous Pro", monospace;
+}
+
+/* Pandoc generated things. */
+h1.title, h2.author, h3.date { display: none; }
+.math { font-family: "Computer Modern", Times, serif; }
 
 </style>
 
